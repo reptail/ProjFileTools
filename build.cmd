@@ -6,7 +6,7 @@ set Root=%~dp0
 set BuildConfiguration=Debug
 set MSBuildTarget=Build
 set NodeReuse=true
-set DeveloperCommandPrompt=%VS150COMNTOOLS%\VsDevCmd.bat
+set DeveloperCommandPrompt=%VS180COMNTOOLS%\VsDevCmd.bat
 set MSBuildAdditionalArguments=/m
 set RunTests=true
 set DeployVsixExtension=true
@@ -32,12 +32,12 @@ if /I "%1" == "/trx-test-results" set VSTestAdditionalArguments=/logger:trx&&shi
 call :Usage && exit /b 1
 :DoneParsing
 
-if not exist "%VS150COMNTOOLS%" (
-  echo To build this repository, this script needs to be run from a Visual Studio 2017 RC developer command prompt.
+if not exist "%VS180COMNTOOLS%" (
+  echo To build this repository, this script needs to be run from a Visual Studio 2026 developer command prompt.
   echo.
   echo If Visual Studio is not installed, visit this page to download:
   echo.
-  echo https://www.visualstudio.com/vs/visual-studio-2017-rc/
+  echo https://visualstudio.microsoft.com/vs/community/
   exit /b 1
 )
 
@@ -47,7 +47,7 @@ if not exist "%VSSDK150Install%" (
 )
 
 if "%VisualStudioVersion%" == "" (
-  REM In Jenkins and MicroBuild, we set VS150COMNTOOLS and VSSDK150Install to point to where VS is installed but don't launch in a developer prompt
+  REM In Jenkins and MicroBuild, we set VS180COMNTOOLS and VSSDK150Install to point to where VS is installed but don't launch in a developer prompt
   call "%DeveloperCommandPrompt%" || goto :BuildFailed
 )
 
