@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -23,6 +23,8 @@ namespace ProjectFileTools
 
         public PackageInfoControl(string packageId, string version, string tfm, IPackageSearchManager searcher)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             InitializeComponent();
             this.ShouldBeThemed();
             PackageId.Content = packageId;
@@ -36,6 +38,8 @@ namespace ProjectFileTools
 
         private void OnImageFailed(object sender, ExceptionRoutedEventArgs e)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             Glyph.ImageFailed -= OnImageFailed;
             Glyph.Source = WpfUtil.MonikerToBitmap(KnownMonikers.NuGet, 32);
         }

@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Xml.Linq;
 using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.Imaging.Interop;
 using Microsoft.VisualStudio.Language.Intellisense;
@@ -13,6 +8,12 @@ using ProjectFileTools.Helpers;
 using ProjectFileTools.NuGetSearch;
 using ProjectFileTools.NuGetSearch.Contracts;
 using ProjectFileTools.NuGetSearch.Feeds;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ProjectFileTools.Completion
 {
@@ -315,12 +316,22 @@ namespace ProjectFileTools.Completion
             _currentCompletionSet.AccessibleCompletions.AddRange(completions);
         }
 
-        private async void UpdateCompletions(object sender, EventArgs e)
+        private void UpdateCompletions(object sender, EventArgs e)
         {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
             try
             {
+                // Await the task to comply with VSSDK007
+                ThreadHelper.JoinableTaskFactory.RunAsync(UpdateAsync).Join();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+
+            async Task UpdateAsync()
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
                 if (_currentCompletionSet == null || _currentSession == null)
                 {
                     return;
@@ -363,10 +374,6 @@ namespace ProjectFileTools.Completion
                     //_currentSession.Dismiss();
                     //_currentSession = _completionBroker.TriggerCompletion(_currentSession.TextView);
                 }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -271,6 +271,8 @@ namespace ProjectFileTools
 
         private int? HandleGoToDefinition()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             TextView.TextBuffer.Properties.TryGetProperty(typeof(ITextDocument), out ITextDocument textDoc);
 
             XmlInfo info = XmlTools.GetXmlInfo(TextView.TextSnapshot, TextView.Caret.Position.BufferPosition.Position);

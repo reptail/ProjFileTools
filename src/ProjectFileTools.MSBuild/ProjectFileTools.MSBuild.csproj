@@ -4,11 +4,11 @@
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build" Version="17.0.0-preview-21322-02" />
+    <PackageReference Include="Microsoft.Build" Version="18.0.2" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Language.Xml" Version="1.1.20" />
-    <PackageReference Include="Microsoft.VisualStudio.Sdk" Version="17.0.0-previews-1-31410-273" />
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" />
     <Reference Update="**\Microsoft.Language.Xml.dll" CopyLocal="true" />
   </ItemGroup>
 
